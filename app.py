@@ -23,7 +23,7 @@ genai.configure(api_key="AIzaSyBBF5wppFXSqZdP2Ffi2x08zMCwlgldeE4")
 
 def chat_with_ai(conversation_history):
     model = genai.GenerativeModel("gemini-1.5-flash")
-    response = model.generate_content("\n".join(conversation_history))
+    response = model.generate_content(f"Here is the content of the PDF:\n{pdf_text}\n\nUser: {user_input}\nChatbot:")
 
     if hasattr(response, 'parts'):
         return [part.text for part in response.parts]
@@ -37,6 +37,7 @@ def main():
         """
         Upload a PDF file and ask questions based on its content.
         The AI will respond based on the PDF contents.
+        Type 'exit' to end the conversation.
         """
     )
 
@@ -54,34 +55,23 @@ def main():
         st.subheader("Extracted Text from PDF:")
         st.text_area("PDF Content", pdf_text, height=200)
 
-       # Initialize conversation history with the PDF text
-        if "conversation_history" not in st.session_state:
-            st.session_state.conversation_history = [
-                f"Here is the content of the PDF:\n{pdf_text}\n\nYou can start asking questions based on the content."
-            ]
-
-        # Start a chat interaction
+         # Start a chat interaction
         user_input = st.text_input("You: ", "")
 
-        if user_input:
-            # Add the user's input to the conversation history
-            st.session_state.conversation_history.append(f"You: {user_input}")
+        if user_input.lower() == "exit":
+            st.write("Chatbot: The conversation has ended.")
+            return
 
+        if user_input:
             # Get the AI's response
-            ai_response = chat_with_ai(st.session_state.conversation_history)
+            ai_response = chat_with_ai(pdf_text, user_input)
 
             # Display the AI's response
             for part in ai_response:
                 st.write(f"Chatbot: {part}")
-                st.session_state.conversation_history.append(f"Chatbot: {part}")
 
             # Clear the input field after user submits the question
             st.text_input("You: ", value="", key="clear_input")
-
-        # Display the ongoing conversation history
-        st.subheader("Conversation History:")
-        for entry in st.session_state.conversation_history:
-            st.write(entry)
 
 if __name__ == "__main__":
     main()
