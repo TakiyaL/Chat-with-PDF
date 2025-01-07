@@ -54,26 +54,34 @@ def main():
         st.subheader("Extracted Text from PDF:")
         st.text_area("PDF Content", pdf_text, height=200)
 
-        # Initialize conversation history with the PDF text
-        conversation_history = [
-            f"Here is the content of the PDF:\n{pdf_text}\n\nYou can start asking questions based on the content."
-        ]
+       # Initialize conversation history with the PDF text
+        if "conversation_history" not in st.session_state:
+            st.session_state.conversation_history = [
+                f"Here is the content of the PDF:\n{pdf_text}\n\nYou can start asking questions based on the content."
+            ]
 
         # Start a chat interaction
         user_input = st.text_input("You: ", "")
 
         if user_input:
             # Add the user's input to the conversation history
-            conversation_history.append(f"You: {user_input}")
+            st.session_state.conversation_history.append(f"You: {user_input}")
 
             # Get the AI's response
-            ai_response = chat_with_ai(conversation_history)
+            ai_response = chat_with_ai(st.session_state.conversation_history)
 
             # Display the AI's response
             for part in ai_response:
                 st.write(f"Chatbot: {part}")
-                conversation_history.append(f"Chatbot: {part}")
+                st.session_state.conversation_history.append(f"Chatbot: {part}")
+
+            # Clear the input field after user submits the question
             st.text_input("You: ", value="", key="clear_input")
+
+        # Display the ongoing conversation history
+        st.subheader("Conversation History:")
+        for entry in st.session_state.conversation_history:
+            st.write(entry)
 
 if __name__ == "__main__":
     main()
