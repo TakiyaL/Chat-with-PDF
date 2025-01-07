@@ -22,14 +22,18 @@ def chunk_text(text, chunk_size=500):
 genai.configure(api_key="AIzaSyBBF5wppFXSqZdP2Ffi2x08zMCwlgldeE4")
 
 def chat_with_ai(pdf_text, user_input):
-    model = genai.GenerativeModel("gemini-1.5-flash")
-    response = model.generate_content(f"Here is the content of the PDF:\n{pdf_text}\n\nUser: {user_input}\nChatbot:")
+    try:
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        prompt = f"Here is the content of the PDF:\n{pdf_text}\n\nUser: {user_input}\nChatbot:"
+        response = model.generate_content(prompt)
 
-    if hasattr(response, 'parts'):
-        return [part.text for part in response.parts]
-    else:
-        return [response.text] 
-
+        if hasattr(response, 'parts'):
+            return [part.text for part in response.parts]
+        else:
+            return [response.text] 
+    except Exception as e:
+        st.error(f"Error with AI response: {e}")
+        return ["Sorry, there was an issue generating the response."]
 
 def main():
     st.title("Chat with PDF")
@@ -56,22 +60,30 @@ def main():
         st.text_area("PDF Content", pdf_text, height=200)
 
          # Start a chat interaction
-        user_input = st.text_input("You: ", "")
+        conversation = []
 
-        if user_input.lower() == "exit":
-            st.write("Chatbot: The conversation has ended.")
-            return
+        while True:
+            user_input = st.text_input("You: ", "")
 
-        if user_input:
-            # Get the AI's response
-            ai_response = chat_with_ai(pdf_text, user_input)
+            if user_input.lower() == "exit":
+                st.write("Chatbot: The conversation has ended.")
+                break
 
-            # Display the AI's response
-            for part in ai_response:
-                st.write(f"Chatbot: {part}")
+            if user_input:
+                # Get the AI's response
+                ai_response = chat_with_ai(pdf_text, user_input)
 
-            # Clear the input field after user submits the question
-            st.text_input("You: ", value="", key="clear_input")
+                # Display the AI's response line by line
+                for part in ai_response:
+                    conversation.append(f"Chatbot: {part}")
+                    st.write(f"Chatbot: {part}")
+                
+                # Reset the input field for next question
+                st.text_input("You: ", value="", key="clear_input")
+
+            # Display the ongoing conversation
+            if conversation:
+                st.text_area("Conversation", "\n".join(conversation), height=400)
 
 if __name__ == "__main__":
     main()
