@@ -21,7 +21,7 @@ def chunk_text(text, chunk_size=500):
 
 genai.configure(api_key="AIzaSyBBF5wppFXSqZdP2Ffi2x08zMCwlgldeE4")
 
-def chat_with_ai(conversation_history):
+def chat_with_ai(pdf_text, user_input):
     model = genai.GenerativeModel("gemini-1.5-flash")
     response = model.generate_content(f"Here is the content of the PDF:\n{pdf_text}\n\nUser: {user_input}\nChatbot:")
 
