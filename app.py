@@ -32,8 +32,8 @@ def chat_with_ai(conversation_history):
 
 
 def main():
-   st.title("Chat with PDF")
-   st.write(
+    st.title("Chat with PDF")
+    st.write(
         """
         Upload a PDF file and ask questions based on its content.
         The AI will respond based on the PDF contents.
