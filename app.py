@@ -73,6 +73,7 @@ def main():
             for part in ai_response:
                 st.write(f"Chatbot: {part}")
                 conversation_history.append(f"Chatbot: {part}")
-    
+            st.text_input("You: ", value="", key="clear_input")
+
 if __name__ == "__main__":
     main()
