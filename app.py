@@ -20,7 +20,7 @@ genai.configure(api_key="AIzaSyBBF5wppFXSqZdP2Ffi2x08zMCwlgldeE4")
 
 def chat_with_ai(pdf_text, user_input):
     try:
-        relevant_text = pdf_text[:2000]
+        relevant_text = pdf_text[:2000]  # Limit content for the AI prompt
         prompt = f"Here is the relevant PDF content:\n{relevant_text}\n\nUser: {user_input}\nChatbot:"
         model = genai.GenerativeModel("gemini-1.5-flash")
         response = model.generate_content(prompt)
@@ -53,17 +53,15 @@ def main():
         st.session_state.conversation = []
 
     # Display the conversation history
-    for i, entry in enumerate(st.session_state.conversation):
+    for entry in st.session_state.conversation:
         st.write(f"**You:** {entry['user']}")
         st.write(f"**Chatbot:** {entry['bot']}")
 
-    # Query input: create a new input box for each query using the next query number.
-    query_key = len(st.session_state.conversation)
-
-    new_query = st.text_input(f"Your query {query_key + 1}:", key=f"query_{query_key}")
+    # Create a new input box for the next query
+    new_query = st.text_input(f"Your query:", key=f"query_{len(st.session_state.conversation)}")
 
     # On Submit
-    if st.button("Submit", key=f"submit_{query_key}"):
+    if st.button("Submit"):
         if new_query.lower() == "exit":
             st.write("Chatbot: The conversation has ended.")
         elif new_query.strip():
@@ -88,6 +86,8 @@ def main():
             # Display the latest response immediately
             st.write(f"**You:** {new_query}")
             st.write(f"**Chatbot:** {st.session_state.conversation[-1]['bot']}")
+
+            # Avoid re-rerunning the app. This automatically loads new input for the next query.
 
 if __name__ == "__main__":
     main()
