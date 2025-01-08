@@ -67,11 +67,10 @@ def main():
 
          # Chat interaction
         st.subheader("Chat")
-        for i in range(st.session_state.query_count):
-            user_query = st.session_state.conversation[i]["user"]
-            bot_response = st.session_state.conversation[i]["bot"]
-            st.write(f"**You:** {user_query}")
-            st.write(f"**Chatbot:** {bot_response}")
+        if st.session_state.conversation:
+            for i, entry in enumerate(st.session_state.conversation):
+                st.write(f"**You:** {entry['user']}")
+                st.write(f"**Chatbot:** {entry['bot']}")
 
         # Input for the next query
         new_query = st.text_input("Ask your question:", key=f"query_{st.session_state.query_count}")
