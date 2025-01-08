@@ -97,10 +97,12 @@ def main():
                     "bot": "\n".join(ai_response)
                 })
 
+                st.write(f"AI response time: {time.time() - start_time:.2f} seconds")
+                
                 # Increment the query count to generate a new input box
                 st.session_state.query_count += 1
-
-                st.write(f"AI response time: {time.time() - start_time:.2f} seconds")
+                
+               
 
 if __name__ == "__main__":
     main()
