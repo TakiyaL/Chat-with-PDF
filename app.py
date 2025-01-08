@@ -44,7 +44,13 @@ def main():
         Type 'exit' to end the conversation.
         """
     )
-
+    
+    # State variables for conversation
+    if "conversation" not in st.session_state:
+        st.session_state.conversation = []
+    if "chat_active" not in st.session_state:
+        st.session_state.chat_active = False
+    
     # Upload PDF file
     uploaded_pdf = st.file_uploader("Choose a PDF file", type="pdf")
 
@@ -59,31 +65,29 @@ def main():
         st.subheader("Extracted Text from PDF:")
         st.text_area("PDF Content", pdf_text, height=200)
 
-         # Start a chat interaction
-        conversation = []
+         # Activate chat
+        st.session_state.chat_active = True
 
-        while True:
+        # Chat interaction
+        if st.session_state.chat_active:
             user_input = st.text_input("You: ", "")
 
-            if user_input.lower() == "exit":
-                st.write("Chatbot: The conversation has ended.")
-                break
-
             if user_input:
-                # Get the AI's response
-                ai_response = chat_with_ai(pdf_text, user_input)
+                if user_input.lower() == "exit":
+                    st.session_state.chat_active = False
+                    st.write("Chatbot: The conversation has ended.")
+                else:
+                    # Get the AI's response
+                    ai_response = chat_with_ai(pdf_text, user_input)
 
-                # Display the AI's response line by line
-                for part in ai_response:
-                    conversation.append(f"Chatbot: {part}")
-                    st.write(f"Chatbot: {part}")
-                
-                # Reset the input field for next question
-                st.text_input("You: ", value="", key="clear_input")
+                    # Add to conversation history
+                    st.session_state.conversation.append(f"You: {user_input}")
+                    for part in ai_response:
+                        st.session_state.conversation.append(f"Chatbot: {part}")
 
             # Display the ongoing conversation
-            if conversation:
-                st.text_area("Conversation", "\n".join(conversation), height=400)
+            if st.session_state.conversation:
+                st.text_area("Conversation", "\n".join(st.session_state.conversation), height=400)
 
 if __name__ == "__main__":
     main()
