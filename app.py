@@ -61,7 +61,7 @@ def main():
     new_query = st.text_input("Your query:", key=f"query_{len(st.session_state.conversation)}")
 
     # On Submit
-    if st.button("Submit"):
+    if st.button("Submit", key=f"submit_{len(st.session_state.conversation)}"):
         if new_query.lower() == "exit":
             st.write("Chatbot: The conversation has ended.")
         elif new_query.strip():
@@ -83,8 +83,9 @@ def main():
             # Display response time
             st.write(f"AI response time: {elapsed_time:.2f} seconds")
 
-            # Re-render the conversation (to show the latest messages immediately)
-            st.experimental_rerun()
+            # Display the latest response immediately
+            st.write(f"**You:** {new_query}")
+            st.write(f"**Chatbot:** {st.session_state.conversation[-1]['bot']}")
 
 if __name__ == "__main__":
     main()
