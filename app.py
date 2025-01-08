@@ -82,10 +82,9 @@ def main():
         # Input for the next query
         new_query = st.text_input("Ask your question:", key=f"query_{st.session_state.query_count}")
         
-        if st.button("Submit"):
-            if new_query:
-                if new_query.lower() == "exit":
-                    st.write("Chatbot: The conversation has ended.")
+        if st.button("Submit")::
+            if new_query.lower() == "exit":
+                st.write("Chatbot: The conversation has ended.")
             else:
                 start_time = time.time()
                 # Get AI response
