@@ -16,7 +16,7 @@ def extract_text_from_pdf(pdf_file):
         return None
 
 # AI Chat Function
-genai.configure(api_key="AIzaSyBBF5wppFXSqZdP2Ffi2x08zMCwlgldeE4")
+genai.configure(api_key="YOUR_API_KEY_HERE")
 
 def chat_with_ai(pdf_text, user_input):
     try:
