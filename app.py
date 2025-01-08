@@ -61,33 +61,34 @@ def main():
     new_query = st.text_input(f"Your query:", key=f"query_{len(st.session_state.conversation)}")
 
     # On Submit
-    if st.button("Submit"):
+    if new_query:
         if new_query.lower() == "exit":
             st.write("Chatbot: The conversation has ended.")
-        elif new_query.strip():
-            # Start timing
-            start_time = time.time()
+            return  # End conversation if 'exit' is typed
 
-            # Get AI response
-            ai_response = chat_with_ai(pdf_text, new_query)
+        # Start timing
+        start_time = time.time()
 
-            # Measure elapsed time
-            elapsed_time = time.time() - start_time
+        # Get AI response
+        ai_response = chat_with_ai(pdf_text, new_query)
 
-            # Update conversation in session state
-            st.session_state.conversation.append({
-                "user": new_query,
-                "bot": "\n".join(ai_response)
-            })
+        # Measure elapsed time
+        elapsed_time = time.time() - start_time
 
-            # Display response time
-            st.write(f"AI response time: {elapsed_time:.2f} seconds")
+        # Update conversation in session state
+        st.session_state.conversation.append({
+            "user": new_query,
+            "bot": "\n".join(ai_response)
+        })
 
-            # Display the latest response immediately
-            st.write(f"**You:** {new_query}")
-            st.write(f"**Chatbot:** {st.session_state.conversation[-1]['bot']}")
+        # Display response time
+        st.write(f"AI response time: {elapsed_time:.2f} seconds")
 
-            # Avoid re-rerunning the app. This automatically loads new input for the next query.
+        # Display the latest response immediately
+        st.write(f"**You:** {new_query}")
+        st.write(f"**Chatbot:** {st.session_state.conversation[-1]['bot']}")
+
+    # No need to call st.experimental_rerun(), Streamlit will auto-refresh the page
 
 if __name__ == "__main__":
     main()
