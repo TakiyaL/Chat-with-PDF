@@ -19,7 +19,7 @@ def chunk_text(text, chunk_size=500):
 
 import google.generativeai as genai
 
-genai.configure(api_key="AIzaSyBBF5wppFXSqZdP2Ffi2x08zMCwlgldeE4")
+genai.configure(api_key="YOUR_API_KEY_HERE")
 
 def chat_with_ai(conversation_history):
     model = genai.GenerativeModel("gemini-1.5-flash")
