@@ -48,8 +48,8 @@ def main():
     # State variables for conversation
     if "conversation" not in st.session_state:
         st.session_state.conversation = []
-    if "chat_active" not in st.session_state:
-        st.session_state.chat_active = False
+    if "query_count" not in st.session_state:
+        st.session_state.query_count = 0 
     
     # Upload PDF file
     uploaded_pdf = st.file_uploader("Choose a PDF file", type="pdf")
@@ -65,29 +65,32 @@ def main():
         st.subheader("Extracted Text from PDF:")
         st.text_area("PDF Content", pdf_text, height=200)
 
-         # Activate chat
-        st.session_state.chat_active = True
+         # Chat interaction
+        st.subheader("Chat")
+        for i in range(st.session_state.query_count):
+            user_query = st.session_state.conversation[i]["user"]
+            bot_response = st.session_state.conversation[i]["bot"]
+            st.write(f"**You:** {user_query}")
+            st.write(f"**Chatbot:** {bot_response}")
 
-        # Chat interaction
-        if st.session_state.chat_active:
-            user_input = st.text_input("You: ", "")
+        # Input for the next query
+        new_query = st.text_input("Ask your question:", key=f"query_{st.session_state.query_count}")
 
-            if user_input:
-                if user_input.lower() == "exit":
-                    st.session_state.chat_active = False
-                    st.write("Chatbot: The conversation has ended.")
-                else:
-                    # Get the AI's response
-                    ai_response = chat_with_ai(pdf_text, user_input)
+        if new_query:
+            if new_query.lower() == "exit":
+                st.write("Chatbot: The conversation has ended.")
+            else:
+                # Get AI response
+                ai_response = chat_with_ai(pdf_text, new_query)
 
-                    # Add to conversation history
-                    st.session_state.conversation.append(f"You: {user_input}")
-                    for part in ai_response:
-                        st.session_state.conversation.append(f"Chatbot: {part}")
+                # Append the conversation to the history
+                st.session_state.conversation.append({
+                    "user": new_query,
+                    "bot": "\n".join(ai_response)
+                })
 
-            # Display the ongoing conversation
-            if st.session_state.conversation:
-                st.text_area("Conversation", "\n".join(st.session_state.conversation), height=400)
+                # Increment the query count to generate a new input box
+                st.session_state.query_count += 1
 
 if __name__ == "__main__":
     main()
