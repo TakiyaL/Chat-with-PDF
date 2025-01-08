@@ -1,7 +1,9 @@
 from PyPDF2 import PdfReader
 import streamlit as st
 import google.generativeai as genai
+import time
 
+@st.cache_data
 def extract_text_from_pdf(pdf_path):
     try:
         reader = PdfReader(pdf_path)
@@ -10,7 +12,7 @@ def extract_text_from_pdf(pdf_path):
             text += page.extract_text()
         return text
     except Exception as e:
-        print(f"Error reading PDF: {e}")
+        st.error(f"Error reading PDF: {e}")
         return None
 
 
@@ -79,11 +81,13 @@ def main():
 
         # Input for the next query
         new_query = st.text_input("Ask your question:", key=f"query_{st.session_state.query_count}")
-
-        if new_query:
-            if new_query.lower() == "exit":
-                st.write("Chatbot: The conversation has ended.")
+        
+        if st.button("Submit"):
+            if new_query:
+                if new_query.lower() == "exit":
+                    st.write("Chatbot: The conversation has ended.")
             else:
+                start_time = time.time()
                 # Get AI response
                 ai_response = chat_with_ai(pdf_text, new_query)
 
@@ -95,5 +99,8 @@ def main():
 
                 # Increment the query count to generate a new input box
                 st.session_state.query_count += 1
+
+                st.write(f"AI response time: {time.time() - start_time:.2f} seconds")
+
 if __name__ == "__main__":
     main()
