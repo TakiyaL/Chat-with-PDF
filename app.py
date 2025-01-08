@@ -57,7 +57,7 @@ def main():
         st.write(f"**You:** {entry['user']}")
         st.write(f"**Chatbot:** {entry['bot']}")
 
-    # Query input
+    # Query input: create a new input box for each query.
     new_query = st.text_input("Your query:", key=f"query_{len(st.session_state.conversation)}")
 
     # On Submit
@@ -86,6 +86,9 @@ def main():
             # Display the latest response immediately
             st.write(f"**You:** {new_query}")
             st.write(f"**Chatbot:** {st.session_state.conversation[-1]['bot']}")
+
+            # Recreate a new input box for the next query
+            st.experimental_rerun()
 
 if __name__ == "__main__":
     main()
