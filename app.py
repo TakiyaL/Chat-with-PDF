@@ -65,12 +65,17 @@ def main():
         st.subheader("Extracted Text from PDF:")
         st.text_area("PDF Content", pdf_text, height=200)
 
-         # Chat interaction
+        # Chat interaction
         st.subheader("Chat")
+        
+        # Debugging: Check the structure of the conversation
         if st.session_state.conversation:
             for i, entry in enumerate(st.session_state.conversation):
-                st.write(f"**You:** {entry['user']}")
-                st.write(f"**Chatbot:** {entry['bot']}")
+                if "user" in entry and "bot" in entry:
+                    st.write(f"**You:** {entry['user']}")
+                    st.write(f"**Chatbot:** {entry['bot']}")
+                else:
+                    st.error(f"Conversation entry at index {i} is invalid: {entry}")
 
         # Input for the next query
         new_query = st.text_input("Ask your question:", key=f"query_{st.session_state.query_count}")
@@ -90,6 +95,5 @@ def main():
 
                 # Increment the query count to generate a new input box
                 st.session_state.query_count += 1
-
 if __name__ == "__main__":
     main()
