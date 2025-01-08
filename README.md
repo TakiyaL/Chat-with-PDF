@@ -32,5 +32,5 @@ To run this app locally, follow these steps:
 Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/Chat-with-PDF-App.git
+git clone https://github.com/TakiyaL/Chat-with-PDF-App.git
 cd Chat-with-PDF-App
