@@ -57,11 +57,13 @@ def main():
         st.write(f"**You:** {entry['user']}")
         st.write(f"**Chatbot:** {entry['bot']}")
 
-    # Query input: create a new input box for each query.
-    new_query = st.text_input("Your query:", key=f"query_{len(st.session_state.conversation)}")
+    # Query input: create a new input box for each query using the next query number.
+    query_key = len(st.session_state.conversation)
+
+    new_query = st.text_input(f"Your query {query_key + 1}:", key=f"query_{query_key}")
 
     # On Submit
-    if st.button("Submit", key=f"submit_{len(st.session_state.conversation)}"):
+    if st.button("Submit", key=f"submit_{query_key}"):
         if new_query.lower() == "exit":
             st.write("Chatbot: The conversation has ended.")
         elif new_query.strip():
@@ -86,9 +88,6 @@ def main():
             # Display the latest response immediately
             st.write(f"**You:** {new_query}")
             st.write(f"**Chatbot:** {st.session_state.conversation[-1]['bot']}")
-
-            # Recreate a new input box for the next query
-            st.experimental_rerun()
 
 if __name__ == "__main__":
     main()
