@@ -32,7 +32,8 @@ Steps to Install
 
 Clone the repository:
 
-git clone https://github.com/your-username/Chat-with-PDF.git
+git clone https://github.com/TakiyaL/Chat-with-PDF.git
+
 cd Chat-with-PDF
 
 Install dependencies:
