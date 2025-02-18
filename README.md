@@ -21,13 +21,13 @@ The **Chat with PDF** app allows users to upload PDF files and interact with the
 
 To run this app locally, follow these steps:
 
-### Prerequisites
+## Prerequisites
 
 - Python 3.x installed on your system.
 - A **Google API key** for **Google Generative AI**.
 - A **GitHub account** for deploying the app on **Streamlit Cloud** (optional).
 
-###  Installation
+##  Installation
 Steps to Install
 
 Clone the repository:
@@ -43,7 +43,7 @@ Run the application:
 
 streamlit run app.py
 
-### Usage
+## Usage
 
 Upload a PDF file.
 
@@ -53,7 +53,7 @@ Enter a query in the chatbox to ask questions based on the uploaded PDF.
 
 The AI will generate responses based on relevant PDF content.
 
-### Future Enhancements
+## Future Enhancements
 
  Improved text extraction for complex PDFs (images, tables, etc.).
 
