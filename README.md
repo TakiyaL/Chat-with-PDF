@@ -63,6 +63,6 @@ The AI will generate responses based on relevant PDF content.
 
  Support for multiple document formats (e.g., DOCX, TXT).
 
-### Contributing
+## Contributing
 
 Contributions are welcome! Feel free to submit issues or pull requests to improve the project.
