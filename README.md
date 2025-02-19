@@ -28,23 +28,26 @@ To run this app locally, follow these steps:
 - A **GitHub account** for deploying the app on **Streamlit Cloud** (optional).
 
 ##  Installation
-Steps to Install
 
-Clone the repository:
+  Steps to Install
 
-git clone https://github.com/TakiyaL/Chat-with-PDF.git
+  Clone the repository:
 
-cd Chat-with-PDF
+  git clone https://github.com/TakiyaL/Chat-with-PDF.git
+
+  cd Chat-with-PDF
+
 
 Install dependencies:
 
-pip install -r requirements.txt
+ ```bash
+ pip install -r requirements.txt
 
 Run the application:
+ ```bash
+ streamlit run app.py
 
-streamlit run app.py
-
-## Usage
+##  Usage
 
 Upload a PDF file.
 
@@ -53,6 +56,7 @@ The application will extract text from the document.
 Enter a query in the chatbox to ask questions based on the uploaded PDF.
 
 The AI will generate responses based on relevant PDF content.
+
 
 ## Future Enhancements
 
@@ -63,6 +67,8 @@ The AI will generate responses based on relevant PDF content.
  More interactive UI features for better user experience.
 
  Support for multiple document formats (e.g., DOCX, TXT).
+
+
 
 ## Contributing
 
