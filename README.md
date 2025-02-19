@@ -30,7 +30,7 @@ To run this app locally, follow these steps:
 ### Setup
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/chat-with-pdf.git
+git clone https://github.com/TakiyaL/chat-with-pdf.git
 cd chat-with-pdf
 
 # Install dependencies
