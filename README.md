@@ -27,14 +27,15 @@ To run this app locally, follow these steps:
 - A **Google API key** for **Google Generative AI**.
 - A **GitHub account** for deploying the app on **Streamlit Cloud** (optional).
 
-##  Installation
+### Setup
+```bash
+# Clone the repository
+git clone https://github.com/your-username/chat-with-pdf.git
+cd chat-with-pdf
 
-  Steps to Install
+# Install dependencies
+pip install -r requirements.txt
 
-  Clone the repository:
-
-  git clone https://github.com/TakiyaL/Chat-with-PDF.git
-
-  cd Chat-with-PDF
-
+# Run the application
+streamlit run app.py
 
