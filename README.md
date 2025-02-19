@@ -38,38 +38,3 @@ To run this app locally, follow these steps:
   cd Chat-with-PDF
 
 
-Install dependencies:
-
- ```bash
- pip install -r requirements.txt
-
-Run the application:
- ```bash
- streamlit run app.py
-
-##  Usage
-
-Upload a PDF file.
-
-The application will extract text from the document.
-
-Enter a query in the chatbox to ask questions based on the uploaded PDF.
-
-The AI will generate responses based on relevant PDF content.
-
-
-## Future Enhancements
-
- Improved text extraction for complex PDFs (images, tables, etc.).
-
- Enhanced AI accuracy with better contextual understanding.
-
- More interactive UI features for better user experience.
-
- Support for multiple document formats (e.g., DOCX, TXT).
-
-
-
-## Contributing
-
-Contributions are welcome! Feel free to submit issues or pull requests to improve the project.
